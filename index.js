@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
+const appDir = path.dirname(require.main.filename);
 
 module.exports = class PigPen {
 
@@ -20,8 +21,8 @@ module.exports = class PigPen {
                 this.store.data = result;
                 this.app.listen(this.config.port);
             })
-            .catch(rejection => {
-                console.log(`${rejection.type}: ${rejection.message}`);
+            .catch(err => {
+                console.log(err);
             })
     }
 }
@@ -57,7 +58,7 @@ const registerApi = function (apiName, config, app, store) {
                 configureResponse(app, apiName, store);
                 res({
                     name: apiName,
-                    filePath: path.join(__dirname, config.data, jsonPath), 
+                    filePath: path.join(appDir, config.data, jsonPath), 
                     data: data
                 });
             })
@@ -86,7 +87,7 @@ const configureResponse = function (app, apiName, store) {
 const getData = function (config, jsonPath) {
     return new Promise((res, rej) => {
         const dataPath = path.join(__dirname, config.data, jsonPath);
-        const seedDataPath = path.join(__dirname, config.seed, jsonPath);
+        const seedDataPath = path.join(appDir, config.seed, jsonPath);
         if (fs.existsSync(dataPath)) {
             res(readFileToJson(dataPath));
         } else if (fs.existsSync(seedDataPath)) {
@@ -105,8 +106,7 @@ const readFileToJson = function (path) {
 
 class ApiStore {
 
-    constructor(config) {
-        this.config = config;
+    constructor() {
         this.flushed = true;
         setInterval(() => {
             if(!this.flushed) {
