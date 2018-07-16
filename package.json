@@ -1,6 +1,6 @@
 {
   "name": "pigpen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An easy-to-setup JSON API generator for CRUD operations. ",
   "main": "index.js",
   "scripts": {
