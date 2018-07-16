@@ -11,6 +11,10 @@
     "JSON",
     "CRUD"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taylorhutchison/PigPen.git"
+  },
   "author": "Taylor Hutchison",
   "license": "ISC",
   "dependencies": {
